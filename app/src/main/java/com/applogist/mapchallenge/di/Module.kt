@@ -1,8 +1,13 @@
 package com.applogist.mapchallenge.di
 
+import com.applogist.mapchallenge.ui.map.MapViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     single { NetworkModule().service() }
 }
-val viewModelModule = module {}
+val viewModelModule = module {
+    viewModel { MapViewModel(get()) }
+
+}

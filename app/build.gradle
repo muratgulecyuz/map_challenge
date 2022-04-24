@@ -74,4 +74,9 @@ dependencies {
     //Generic Utils
     implementation "com.blankj:utilcodex:1.30.6"
 
+    //Helper for easy request with retrofit & view model
+    implementation "com.github.murgupluoglu:request-android:4.2.0"
+
+
+
 }
