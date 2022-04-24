@@ -1,7 +1,9 @@
 package com.applogist.mapchallenge.ui.map
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class DestinationResponse(
     @SerializedName("center_coordinates")
@@ -11,12 +13,13 @@ data class DestinationResponse(
     @SerializedName("name")
     val name: String?,
     @SerializedName("trips")
-    val trips: List<Trip>?,
+    val trips: Trips?,
     @SerializedName("trips_count")
     val tripsCount: Int?,
     var isSelected: Boolean = false
 )
 
+@Parcelize
 data class Trip(
     @SerializedName("bus_name")
     val busName: String?,
@@ -24,4 +27,7 @@ data class Trip(
     val id: Int?,
     @SerializedName("time")
     val time: String?
-)
+) : Parcelable
+
+@Parcelize
+class Trips : ArrayList<Trip>(), Parcelable

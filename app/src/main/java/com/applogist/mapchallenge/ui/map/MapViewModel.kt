@@ -18,4 +18,17 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
     fun getDestinations() {
         destinationsResponse.request({ serviceInterface.fetchDestinations() })
     }
+
+    fun selectMarker(tag: Int) {
+        clearSelections()
+        markerList.find { it.id == tag }?.isSelected = true
+    }
+
+    private fun clearSelections() {
+        markerList.forEach { it.isSelected = false }
+    }
+
+    fun getSelectedMarker(): DestinationResponse? {
+        return markerList.find { it.isSelected }
+    }
 }

@@ -2,6 +2,7 @@ package com.applogist.mapchallenge.ui.map
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.base.BaseFragment
 import com.applogist.mapchallenge.databinding.FragmentMapBinding
@@ -27,6 +28,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         viewModel.getDestinations()
         observeDestinations()
+        tripsButtonClickListener()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -41,7 +43,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private fun markerClickListener() {
         mMap.setOnMarkerClickListener { marker ->
             binding.listTripsButton.visibility = View.VISIBLE
+            viewModel.selectMarker(marker.tag as Int)
             false
+        }
+    }
+
+    private fun tripsButtonClickListener() {
+        binding.listTripsButton.setOnClickListener {
+            viewModel.getSelectedMarker()?.trips?.let { trips ->
+                findNavController().navigate(
+                    MapFragmentDirections.actionMapFragmentToTripsFragment(
+                        trips
+                    )
+                )
+            }
+
+
         }
     }
 
