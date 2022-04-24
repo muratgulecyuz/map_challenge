@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Map Challenge</string>
+    <string name="list_trips">List Trips</string>
 </resources>

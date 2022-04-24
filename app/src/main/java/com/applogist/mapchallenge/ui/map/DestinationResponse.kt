@@ -1,4 +1,4 @@
-package com.applogist.mapchallenge.ui.map.data.response
+package com.applogist.mapchallenge.ui.map
 
 
 import com.google.gson.annotations.SerializedName
@@ -13,7 +13,8 @@ data class DestinationResponse(
     @SerializedName("trips")
     val trips: List<Trip>?,
     @SerializedName("trips_count")
-    val tripsCount: Int?
+    val tripsCount: Int?,
+    var isSelected: Boolean = false
 )
 
 data class Trip(

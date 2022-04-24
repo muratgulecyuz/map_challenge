@@ -5,10 +5,15 @@ import android.view.View
 import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.base.BaseFragment
 import com.applogist.mapchallenge.databinding.FragmentMapBinding
+import com.applogist.mapchallenge.utils.splitCoordinates
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.murgupluoglu.request.STATUS_ERROR
+import com.murgupluoglu.request.STATUS_LOADING
+import com.murgupluoglu.request.STATUS_SUCCESS
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -21,13 +26,55 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         viewModel.getDestinations()
+        observeDestinations()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        initMap(googleMap)
+        markerClickListener()
+    }
 
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private fun initMap(googleMap: GoogleMap) {
+        mMap = googleMap
+    }
+
+    private fun markerClickListener() {
+        mMap.setOnMarkerClickListener { marker ->
+            binding.listTripsButton.visibility = View.VISIBLE
+            false
+        }
+    }
+
+    private fun observeDestinations() {
+        viewModel.observeDestinationsResponse().observe(viewLifecycleOwner) {
+            when (it.status) {
+                STATUS_LOADING -> {
+                }
+                STATUS_SUCCESS -> {
+                    val destinations = it.responseObject
+                    viewModel.markerList = destinations ?: listOf()
+                    destinations?.forEach { destination ->
+                        val destinationCoordinates =
+                            destination.centerCoordinates?.splitCoordinates()
+                        destinationCoordinates?.let { coordinateCouple ->
+                            mMap.addMarker(
+                                MarkerOptions().position(
+                                    LatLng(
+                                        coordinateCouple.first,
+                                        coordinateCouple.second
+                                    )
+                                )
+                                    .title(destination.trips?.size.toString() + "trips")
+                            )?.tag = destination.id
+                        }
+
+
+                    }
+                }
+                STATUS_ERROR -> {
+
+                }
+            }
+        }
     }
 }
