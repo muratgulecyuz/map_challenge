@@ -50,10 +50,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private fun tripsButtonClickListener() {
         binding.listTripsButton.setOnClickListener {
-            viewModel.getSelectedMarker()?.trips?.let { trips ->
+            viewModel.getSelectedMarker()?.let { destination ->
                 findNavController().navigate(
                     MapFragmentDirections.actionMapFragmentToTripsFragment(
-                        trips
+                        destination
                     )
                 )
             }

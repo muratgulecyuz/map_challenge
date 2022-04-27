@@ -2,4 +2,8 @@
     <string name="app_name">Map Challenge</string>
     <string name="list_trips">List Trips</string>
     <string name="book">Book</string>
+    <string name="full_trip">The trip you selected is full.</string>
+    <string name="select_another_trip">Please select another one</string>
+    <string name="select_trip">Select a trip</string>
+
 </resources>

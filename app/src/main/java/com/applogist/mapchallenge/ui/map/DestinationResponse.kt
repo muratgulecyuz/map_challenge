@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class DestinationResponse(
     @SerializedName("center_coordinates")
     val centerCoordinates: String?,
@@ -13,11 +14,11 @@ data class DestinationResponse(
     @SerializedName("name")
     val name: String?,
     @SerializedName("trips")
-    val trips: Trips?,
+    val trips: List<Trip>?,
     @SerializedName("trips_count")
     val tripsCount: Int?,
     var isSelected: Boolean = false
-)
+) : Parcelable
 
 @Parcelize
 data class Trip(
@@ -28,6 +29,3 @@ data class Trip(
     @SerializedName("time")
     val time: String?
 ) : Parcelable
-
-@Parcelize
-class Trips : ArrayList<Trip>(), Parcelable

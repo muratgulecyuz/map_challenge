@@ -18,8 +18,8 @@
         android:name="com.applogist.mapchallenge.ui.trips.TripsFragment"
         android:label="Trips Fragment">
         <argument
-            android:name="trips"
-            app:argType="com.applogist.mapchallenge.ui.map.Trips" />
+            android:name="destination"
+            app:argType="com.applogist.mapchallenge.ui.map.DestinationResponse" />
     </fragment>
 
 </navigation>

@@ -81,5 +81,10 @@ dependencies {
     //Helper for easy request with retrofit & view model
     implementation "com.github.murgupluoglu:request-android:4.2.0"
 
+    // Material Dialog
+    def materialDialogVersion = "3.3.0"
+    implementation "com.afollestad.material-dialogs:core:$materialDialogVersion"
+    implementation "com.afollestad.material-dialogs:input:$materialDialogVersion"
+
 
 }

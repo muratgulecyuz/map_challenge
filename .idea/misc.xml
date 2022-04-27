@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_map.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_trips.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_map.xml" value="0.1" />
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_trips.xml" value="0.1" />
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/item_trip_layout.xml" value="0.18518518518518517" />
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/view_custom_dialog.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
