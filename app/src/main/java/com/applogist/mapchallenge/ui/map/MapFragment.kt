@@ -23,10 +23,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     override fun getLayoutId(): Int = R.layout.fragment_map
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-        viewModel.getDestinations()
+        initMapFragment()
         observeDestinations()
         tripsButtonClickListener()
     }
@@ -34,6 +31,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         initMap(googleMap)
         markerClickListener()
+        viewModel.getDestinations()
+    }
+
+    private fun initMapFragment() {
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     private fun initMap(googleMap: GoogleMap) {
@@ -62,6 +66,26 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         }
     }
 
+    private fun addMarker(destination: DestinationResponse) {
+        val destinationCoordinates =
+            destination.centerCoordinates?.splitCoordinates()
+
+        destinationCoordinates?.let { coordinateCouple ->
+            val markerOptions = MarkerOptions().position(
+                LatLng(
+                    coordinateCouple.first,
+                    coordinateCouple.second
+                )
+            ).title(destination.trips?.size.toString() + "trips")
+
+
+            mMap.addMarker(
+                markerOptions
+            )?.tag = destination.id
+        }
+
+    }
+
     private fun observeDestinations() {
         viewModel.observeDestinationsResponse().observe(viewLifecycleOwner) {
             when (it.status) {
@@ -69,23 +93,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
                 }
                 STATUS_SUCCESS -> {
                     val destinations = it.responseObject
-                    viewModel.markerList = destinations ?: listOf()
+                    viewModel.destinationList = destinations ?: listOf()
                     destinations?.forEach { destination ->
-                        val destinationCoordinates =
-                            destination.centerCoordinates?.splitCoordinates()
-                        destinationCoordinates?.let { coordinateCouple ->
-                            mMap.addMarker(
-                                MarkerOptions().position(
-                                    LatLng(
-                                        coordinateCouple.first,
-                                        coordinateCouple.second
-                                    )
-                                )
-                                    .title(destination.trips?.size.toString() + "trips")
-                            )?.tag = destination.id
-                        }
-
-
+                        addMarker(destination)
                     }
                 }
                 STATUS_ERROR -> {

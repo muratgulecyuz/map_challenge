@@ -7,10 +7,10 @@ import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
 
 class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel() {
-    val destinationsResponse: MutableLiveData<RESPONSE<List<DestinationResponse>>> =
+    private val destinationsResponse: MutableLiveData<RESPONSE<List<DestinationResponse>>> =
         MutableLiveData()
 
-    var markerList = listOf<DestinationResponse>()
+    var destinationList = listOf<DestinationResponse>()
 
     fun observeDestinationsResponse() = destinationsResponse
 
@@ -21,14 +21,14 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
 
     fun selectMarker(tag: Int) {
         clearSelections()
-        markerList.find { it.id == tag }?.isSelected = true
+        destinationList.find { it.id == tag }?.isSelected = true
     }
 
     private fun clearSelections() {
-        markerList.forEach { it.isSelected = false }
+        destinationList.forEach { it.isSelected = false }
     }
 
     fun getSelectedMarker(): DestinationResponse? {
-        return markerList.find { it.isSelected }
+        return destinationList.find { it.isSelected }
     }
 }

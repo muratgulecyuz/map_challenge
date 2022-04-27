@@ -1,5 +1,6 @@
 package com.applogist.mapchallenge.ui.trips
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,41 +9,30 @@ import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.databinding.ItemTripLayoutBinding
 import com.applogist.mapchallenge.ui.map.Trip
 
-class TripsAdapter(val clickListener: (trip: Trip) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
+class TripsAdapter(private val clickListener: (trip: Trip) -> Unit) : RecyclerView.Adapter<TripsViewHolder>() {
 
-    var itemViewModels: List<Trip> = emptyList()
+    private var tripList: List<Trip> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripsViewHolder {
         val binding: ItemTripLayoutBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_trip_layout,
             parent,
             false
         )
-        return ViewHolder(binding, clickListener)
+        return TripsViewHolder(binding, clickListener)
     }
 
-    override fun getItemCount(): Int = itemViewModels.size
+    override fun getItemCount(): Int = tripList.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(itemViewModels[position])
+    override fun onBindViewHolder(holder: TripsViewHolder, position: Int) {
+        holder.bind(tripList[position])
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(items: List<Trip>?) {
-        itemViewModels = items ?: emptyList()
+        tripList = items ?: emptyList()
         notifyDataSetChanged()
     }
 }
 
-class ViewHolder(
-    private val binding: ItemTripLayoutBinding,
-    val clickListener: (trip: Trip) -> Unit
-) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(itemViewModel: Trip) {
-        binding.tripNameTextView.text = itemViewModel.busName
-        binding.tripTimeTextView.text = itemViewModel.time
-        binding.bookButton.setOnClickListener { clickListener.invoke(itemViewModel) }
-    }
-}

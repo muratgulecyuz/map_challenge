@@ -6,7 +6,7 @@ import com.applogist.mapchallenge.network.ServiceInterface
 import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
 
-class TripsViewModel(val serviceInterface: ServiceInterface) : ViewModel() {
+class TripsViewModel(private val serviceInterface: ServiceInterface) : ViewModel() {
     private val bookingResponse: MutableLiveData<RESPONSE<Any>> = MutableLiveData()
     fun observeBookingResponse() = bookingResponse
 
