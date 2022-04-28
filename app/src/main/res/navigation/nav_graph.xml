@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.applogist.mapchallenge.ui.map.MapFragment"
+        android:name="com.mapchallenge.ui.map.MapFragment"
         android:label="Map Fragment">
         <action
             android:id="@+id/action_mapFragment_to_tripsFragment"
@@ -15,11 +15,11 @@
 
     <fragment
         android:id="@+id/tripsFragment"
-        android:name="com.applogist.mapchallenge.ui.trips.TripsFragment"
+        android:name="com.mapchallenge.ui.trips.TripsFragment"
         android:label="Trips Fragment">
         <argument
             android:name="destination"
-            app:argType="com.applogist.mapchallenge.ui.map.DestinationResponse" />
+            app:argType="com.mapchallenge.ui.map.DestinationResponse" />
     </fragment>
 
 </navigation>
