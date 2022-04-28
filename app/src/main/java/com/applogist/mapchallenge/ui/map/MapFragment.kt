@@ -9,11 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.base.BaseFragment
 import com.applogist.mapchallenge.databinding.FragmentMapBinding
-import com.applogist.mapchallenge.utils.splitCoordinates
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.murgupluoglu.request.STATUS_ERROR
 import com.murgupluoglu.request.STATUS_LOADING
 import com.murgupluoglu.request.STATUS_SUCCESS
@@ -38,6 +37,12 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         initMap(googleMap)
         markerClickListener()
         viewModel.getDestinations()
+    }
+
+    private fun mapClickListener() {
+        mMap.setOnMapClickListener {
+            binding.listTripsButton.visibility = View.GONE
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -71,6 +76,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private fun initMap(googleMap: GoogleMap) {
         mMap = googleMap
+        mapClickListener()
     }
 
     private fun markerClickListener() {
@@ -90,29 +96,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
                     )
                 )
             }
-
-
         }
-    }
-
-    private fun addMarker(destination: DestinationResponse) {
-        val destinationCoordinates =
-            destination.centerCoordinates?.splitCoordinates()
-
-        destinationCoordinates?.let { coordinateCouple ->
-            val markerOptions = MarkerOptions().position(
-                LatLng(
-                    coordinateCouple.first,
-                    coordinateCouple.second
-                )
-            ).title(destination.trips?.size.toString() + "trips")
-
-
-            mMap.addMarker(
-                markerOptions
-            )?.tag = destination.id
-        }
-
     }
 
     private fun observeDestinations() {
@@ -123,9 +107,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
                 STATUS_SUCCESS -> {
                     val destinations = it.responseObject
                     viewModel.destinationList = destinations ?: listOf()
-                    destinations?.forEach { destination ->
-                        addMarker(destination)
-                    }
+                    viewModel.addMarker(mMap)
+
                 }
                 STATUS_ERROR -> {
 

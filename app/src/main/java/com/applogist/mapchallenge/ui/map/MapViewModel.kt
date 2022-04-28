@@ -3,6 +3,10 @@ package com.applogist.mapchallenge.ui.map
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.applogist.mapchallenge.network.ServiceInterface
+import com.applogist.mapchallenge.utils.splitCoordinates
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
 
@@ -30,5 +34,28 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
 
     fun getSelectedMarker(): DestinationResponse? {
         return destinationList.find { it.isSelected }
+    }
+
+    fun addMarker(map: GoogleMap) {
+        destinationList.forEach { destination ->
+
+            val destinationCoordinates =
+                destination.centerCoordinates?.splitCoordinates()
+
+            destinationCoordinates?.let { coordinateCouple ->
+                val markerOptions = MarkerOptions().position(
+                    LatLng(
+                        coordinateCouple.first,
+                        coordinateCouple.second
+                    )
+                ).title(destination.trips?.size.toString() + "trips")
+
+
+                map.addMarker(
+                    markerOptions
+                )?.tag = destination.id
+            }
+
+        }
     }
 }
