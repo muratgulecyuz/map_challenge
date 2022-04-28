@@ -1,13 +1,9 @@
 package com.applogist.mapchallenge.ui.map
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.location.Location
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.base.BaseFragment
@@ -16,8 +12,6 @@ import com.applogist.mapchallenge.utils.BOOKED_DESTINATION
 import com.applogist.mapchallenge.utils.bitmapDescriptorFromVector
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.murgupluoglu.request.STATUS_ERROR
 import com.murgupluoglu.request.STATUS_LOADING

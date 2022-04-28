@@ -1,6 +1,5 @@
 package com.applogist.mapchallenge.utils
 
-import android.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -21,7 +20,7 @@ fun String.splitCoordinates(): Pair<Double, Double>? {
 
 fun Context.bitmapDescriptorFromVector(
     @DrawableRes vectorDrawableResourceId: Int
-): BitmapDescriptor? {
+): BitmapDescriptor {
     val vectorDrawable = ContextCompat.getDrawable(this, vectorDrawableResourceId)
     vectorDrawable!!.setBounds(
         0,
