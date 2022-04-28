@@ -1,12 +1,16 @@
 package com.applogist.mapchallenge.ui.map
 
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.applogist.mapchallenge.R
 import com.applogist.mapchallenge.base.BaseFragment
 import com.applogist.mapchallenge.databinding.FragmentMapBinding
 import com.applogist.mapchallenge.utils.splitCoordinates
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -21,17 +25,42 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private val viewModel: MapViewModel by viewModel()
 
     override fun getLayoutId(): Int = R.layout.fragment_map
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMapFragment()
         observeDestinations()
         tripsButtonClickListener()
+        getCurrentLocation()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         initMap(googleMap)
         markerClickListener()
         viewModel.getDestinations()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let {
+                    moveCameraCurrentLocation(it)
+                }
+
+            }
+    }
+
+    private fun moveCameraCurrentLocation(location: Location) {
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    location.latitude,
+                    location.longitude
+                ), 10f
+            )
+        )
     }
 
     private fun initMapFragment() {
