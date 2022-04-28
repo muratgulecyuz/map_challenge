@@ -46,13 +46,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
-                    moveCameraCurrentLocation(it)
+                    moveCamera(it)
                 }
 
             }
     }
 
-    private fun moveCameraCurrentLocation(location: Location) {
+    private fun moveCamera(location: Location) {
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
