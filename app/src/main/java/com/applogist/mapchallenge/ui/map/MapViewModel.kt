@@ -6,6 +6,7 @@ import com.applogist.mapchallenge.network.ServiceInterface
 import com.applogist.mapchallenge.utils.splitCoordinates
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
@@ -15,6 +16,7 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
         MutableLiveData()
 
     var destinationList = listOf<DestinationResponse>()
+    var markerList = arrayListOf<Marker>()
 
     fun observeDestinationsResponse() = destinationsResponse
 
@@ -32,8 +34,12 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
         destinationList.forEach { it.isSelected = false }
     }
 
-    fun getSelectedMarker(): DestinationResponse? {
+    fun getSelectedDestinaton(): DestinationResponse? {
         return destinationList.find { it.isSelected }
+    }
+
+    fun getSelectedMarker(destinationId: Int): Marker? {
+        return markerList.find { it.tag == destinationId }
     }
 
     fun addMarker(map: GoogleMap) {
@@ -51,9 +57,14 @@ class MapViewModel(private val serviceInterface: ServiceInterface) : ViewModel()
                 ).title(destination.trips?.size.toString() + "trips")
 
 
-                map.addMarker(
+                val marker = map.addMarker(
                     markerOptions
-                )?.tag = destination.id
+                )
+                marker?.tag = destination.id
+                marker?.let {
+                    markerList.add(it)
+                }
+
             }
 
         }

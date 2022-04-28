@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/drawable/ic_checked.xml" value="0.123" />
         <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_map.xml" value="0.1" />
         <entry key="..\:/Users/Murat/AndroidStudioProjects/MapChallenge/app/src/main/res/layout/fragment_trips.xml" value="0.12" />
